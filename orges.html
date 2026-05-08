@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="sq">
+<head>
+<meta charset="UTF-8">
+<title>Orges's F00D</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- HERO -->
+<section class="hero">
+    <h1>🍔 Orges's F00D</h1>
+    <p>Shije që s’harrohet</p>
+    <button onclick="scrollToMenu()">Shiko Menunë</button>
+    <button class="btn" onclick="scrollToDrinks()">🥤 Pijet</button>
+</section>
+
+<!-- MENU -->
+<section id="menu" class="menu">
+
+<div class="card" onclick="openModal('Hamburger', 'Mish, djathë, sallatë, salcë', 3.5)">
+<img src="https://images.unsplash.com/photo-1550547660-d9450f859349">
+<h3>Hamburger</h3>
+<p>3.50€</p>
+</div>
+
+<div class="card" onclick="openModal('Hot Dog', 'Suxhuk, ketchup, mustard, sallatë', 2.5)">
+<img src="https://images.unsplash.com/photo-1606755962773-d324e0a13086">
+<h3>Hot Dog</h3>
+<p>2.50€</p>
+</div>
+
+<div class="card" onclick="openModal('Sandwich', 'Pule, sallatë, majonez', 3)">
+<img src="https://images.unsplash.com/photo-1528735602780-2552fd46c7af">
+<h3>Sandwich</h3>
+<p>3.00€</p>
+</div>
+
+</section>
+
+<!-- PIJET -->
+<h2 class="title">🥤 Pijet</h2>
+
+<section id="drinks" class="menu">
+
+<div class="card" onclick="openModal('Coca Cola', 'Pije freskuese', 1)">
+<img src="https://images.unsplash.com/photo-1581636625402-29b2a704ef13">
+<h3>Coca Cola</h3>
+<p>1.00€</p>
+</div>
+
+<div class="card" onclick="openModal('Pepsi', 'Pije freskuese', 1)">
+<img src="https://images.unsplash.com/photo-1624517452488-04869289c4ca">
+<h3>Pepsi</h3>
+<p>1.00€</p>
+</div>
+
+<div class="card" onclick="openModal('Fanta', 'Portokall', 1)">
+<img src="https://images.unsplash.com/photo-1613478223719-2ab802602423">
+<h3>Fanta</h3>
+<p>1.00€</p>
+</div>
+
+<div class="card" onclick="openModal('Ice Tea', 'Limon', 1.2)">
+<img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc">
+<h3>Ice Tea</h3>
+<p>1.20€</p>
+</div>
+
+<div class="card" onclick="openModal('Ayran', 'Kos i ftohtë', 1)">
+<img src="https://images.unsplash.com/photo-1604908177522-040c1c7c2a1b">
+<h3>Ayran</h3>
+<p>1.00€</p>
+</div>
+
+<div class="card" onclick="openModal('Jogurt', 'Jogurt natyral', 1)">
+<img src="https://images.unsplash.com/photo-1571212515416-fcae5c6f6d75">
+<h3>Jogurt</h3>
+<p>1.00€</p>
+</div>
+
+</section>
+
+<!-- MODAL -->
+<div id="modal" class="modal">
+<div class="modal-content">
+<span onclick="closeModal()" class="close">×</span>
+<h2 id="title"></h2>
+<p id="desc"></p>
+<p id="price"></p>
+<button onclick="addToCart()">Shto në Shportë</button>
+</div>
+</div>
+
+<!-- CART -->
+<div class="cart">
+<h2>🛒 Shporta</h2>
+<ul id="cartItems"></ul>
+<p id="total">Totali: 0€</p>
+<button onclick="orderWhatsApp()">Porosit në WhatsApp</button>
+</div>
+
+<script>
+let cart = [];
+let currentItem = {};
+
+function openModal(title, desc, price){
+    currentItem = {title, desc, price};
+    document.getElementById("modal").style.display="flex";
+    document.getElementById("title").innerText=title;
+    document.getElementById("desc").innerText=desc;
+    document.getElementById("price").innerText="Çmimi: "+price+"€";
+}
+
+function closeModal(){
+    document.getElementById("modal").style.display="none";
+}
+
+function addToCart(){
+    cart.push(currentItem);
+    updateCart();
+    closeModal();
+}
+
+function updateCart(){
+    let list = document.getElementById("cartItems");
+    list.innerHTML="";
+    let total=0;
+
+    cart.forEach(item=>{
+        let li=document.createElement("li");
+        li.innerText=item.title+" - "+item.price+"€";
+        list.appendChild(li);
+        total+=item.price;
+    });
+
+    document.getElementById("total").innerText="Totali: "+total+"€";
+}
+
+function orderWhatsApp(){
+    let text="Porosia:\n";
+    cart.forEach(item=>{
+        text+=item.title+" - "+item.price+"€\n";
+    });
+
+    window.open("https://wa.me/38345720705?text="+encodeURIComponent(text));
+}
+
+function scrollToMenu(){
+    document.getElementById("menu").scrollIntoView({behavior:"smooth"});
+}
+
+function scrollToDrinks(){
+    document.getElementById("drinks").scrollIntoView({behavior:"smooth"});
+}
+</script>
+
+</body>
+</html>
